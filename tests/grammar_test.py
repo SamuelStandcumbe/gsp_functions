@@ -84,8 +84,47 @@ def test_cannot_be_empty():
     error_message = str(e.value)
     assert error_message == "Imput cannot be empty"
 
+"tests for percentage"
+'''
+a. no checks and you run percentage_good should return an error
+b. one check passess should return 100
+c. one check fails should return 0
+d. multiple checks should return the correct percentage 
+    - (2 fail 1 success - 33.33)
+
+counter should be put above the check function to initialise them. 
+counters should only be added to after the validation.
+at the start of the perccentage_good function i check if total checks is 0, 
+then raise error if it is. invalid imports shuld raise errors and i test by 
+importing pytest
+'''
+
 def test_percentage_is_correct():
     grammar = GrammarStats()
     grammar.check("Hello!")
     grammar.check("hello")
     assert grammar.percentage_good() == 50
+
+def test_percentage_with_no_checks():
+    grammar = GrammarStats()
+    with pytest.raises(Exception) as e:
+        grammar.percentage_good()
+    error_message = str(e.value)
+    assert error_message == "Total checks cannot be 0"
+
+def test_percentage_one_success():
+    grammar = GrammarStats()
+    grammar.check("Hello!")
+    assert grammar.percentage_good() == 100
+
+def test_percentage_one_failure():
+    grammar = GrammarStats()
+    grammar.check("hello")
+    assert grammar.percentage_good() == 0
+
+def test_percentage_multiple_checks():
+    grammar = GrammarStats()
+    grammar.check("hello")
+    grammar.check("hello")
+    grammar.check("Hello!")
+    assert grammar.percentage_good() == 33.33
