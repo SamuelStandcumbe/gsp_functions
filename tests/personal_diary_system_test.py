@@ -27,3 +27,31 @@ def test_input_is_integer():
     with pytest.raises(Exception) as e:
         count_words(123)
     assert str(e.value) == "Input needs to be a string"
+
+# These are tests for estimated_reading_time
+
+def test_less_than_200_words():
+    text = "I love python so much"
+    assert estimated_reading_time(text) == "Estimated reading time: 1 minute"
+
+def test_exactly_200_words():
+    text = "I love python so much " * 40
+    assert estimated_reading_time(text) == "Estimated reading time: 1 minute"
+
+def test_more_than_200_words():
+    text = "I love python so much yipee! " *100
+    assert estimated_reading_time(text) == "Estimated reading time: 3 minutes"
+
+# Tests for grammar_checker
+
+def test_no_capital_letter():
+    result = grammar_checker("hello, world!")
+    assert result == "Hello, world!"
+
+def test_no_punctuation():
+    result = grammar_checker("Hello, world")
+    assert result == "Hello, world!"
+
+def test_no_punctuation_or_capitalisation():
+    result = grammar_checker("hello, world")
+    assert result == "Hello, world!"
