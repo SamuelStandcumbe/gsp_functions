@@ -1,4 +1,4 @@
-from lib.personal_diary_system import *
+from lib.personal_diary_system_functions import *
 import pytest
 
 # tests for make_snippet
