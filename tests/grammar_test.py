@@ -1,5 +1,5 @@
 from lib.grammar import *
-
+import pytest
 '''
 1. Describe the problem
 " i want a class  with two functions, check, which
@@ -19,7 +19,7 @@ Side Effects  | changes the text str
 
 3. Create examples as tests
 a. see if the check function works (CAPITAL AND EXCLAIMATION MARK + NO CAPITAL AND EXCLIMATION MARK)
-grammar_check.check("Hello!") == True
+grammar_check.check("Hello!") == True.    y
 grammer_check.check("hello") == False
 
 b. check to see if the percentage_ggod 
@@ -28,17 +28,64 @@ grammar_stats.check("Hello!")
 grammer_stats.check("hello!")
 grammar_stats.percentage_good() == 50
 
-c. starts with capital, edns with question mark + no capital and question mark
+c. starts with capital, edns with question mark + no capital and question mark y
 
-d. starts with capital ends with period +no capital nd period
+d. starts with capital ends with period +no capital nd period y
 
-e. empty string
+e. empty string y
 
-f. starts with punctuation
+f. starts with punctuation y
 
-g. starts with numbers
+g. starts with numbers y
 
 
 
 4. Implement 
 '''
+#testing that true only returns if there is both a capitalised first letter and a punctuation mark at the end
+def test_capital_and_exclaimation():
+    grammar = GrammarStats()
+    assert grammar.check("Hello!") == True
+    assert grammar.check("hello!") == False
+    assert grammar.check("hello") == False
+
+def test_capital_and_question():
+    grammar = GrammarStats()
+    assert grammar.check("Hello?") == True
+    assert grammar.check("hello?") == False
+    assert grammar.check("hello") == False
+
+def test_capital_and_period():
+    grammar = GrammarStats()
+    assert grammar.check("Hello.") == True
+    assert grammar.check("hello.") == False
+    assert grammar.check("hello") == False
+
+def test_start_with_punctuation():
+    grammar = GrammarStats()
+    assert grammar.check("!Hello") == False
+    assert grammar.check("!hello") == False
+    assert grammar.check("?Hello") == False
+    assert grammar.check("?hello") == False
+    assert grammar.check(".Hello") == False
+    assert grammar.check(".hello") == False
+
+def test_input_type():
+    grammar = GrammarStats()
+    with pytest.raises(ValueError) as e:
+        grammar.check(123)
+    error_message = str(e.value)
+    assert error_message == "Input must be a string"
+
+def test_cannot_be_empty():
+    grammar = GrammarStats()
+    with pytest.raises(Exception) as e:
+        grammar.check(" ")
+    error_message = str(e.value)
+    assert error_message == "Imput cannot be empty"
+
+def test_percentage_is_correct():
+    grammar = GrammarStats()
+    grammar.check("Hello!")
+    grammar.check("hello")
+    assert grammar.percentage_good() == 50
