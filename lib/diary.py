@@ -1,40 +1,47 @@
-import math
-class DiaryEntry():
+from lib.diary_entry import *
 
-    def __init__(self, title, contents):
-        self.title = title
-        self.contents = contents
-        self.read_offset = 0 #tracker for reading_chunks
+class Diary:
+    def __init__(self):
+        self.entries = []
 
-    def format(self):
-        formatted_entry = f"{self.title}: {self.contents}"
-        return formatted_entry
+    def add(self, entry):
+        # Parameters:
+        #   entry: an instance of DiaryEntry
+        # Returns:
+        #   Nothing
+        # Side-effects:
+        #   Adds the entry to the entries list
+        self.entries.append(entry)
+
+    def all(self):
+        # Returns:
+        #   A list of instances of DiaryEntry
+        return self.entries
 
     def count_words(self):
-        if not self.contents.strip():
-            return 0
-        return len(self.contents.split())
+        # Returns:
+        #   An integer representing the number of words in all diary entries
+        # HINT:
+        #   This method should make use of the `count_words` method on DiaryEntry.
+        DiaryEntry.count_words(self.entries)
 
     def reading_time(self, wpm):
-        if wpm <= 0:
-            raise ValueError("WPM must be greater than 0.")
-        word_count = self.count_words()
-        return math.ceil(word_count / wpm)
+        # Parameters:
+        #   wpm: an integer representing the number of words the user can read
+        #        per minute
+        # Returns:
+        #   An integer representing an estimate of the reading time in minutes
+        #   if the user were to read all entries in the diary.
+        pass
 
-    def reading_chunk(self, wpm, minutes):
-        #how many words we can read
-        words_to_read = wpm * minutes
-        words = self.contents.split()
-
-        #if already read, restart
-        if self.read_offset >= len(words):
-            self.read_offset = 0
-
-        #chunk of words for this session
-        start = self.read_offset
-        end = start + words_to_read
-        chunk_words = words[start:end]
-
-        #update for next call
-        self.read_offset = end
-        return " ".join(chunk_words)
+    def find_best_entry_for_reading_time(self, wpm, minutes):
+        # Parameters:
+        #   wpm:     an integer representing the number of words the user can
+        #            read per minute
+        #   minutes: an integer representing the number of minutes the user has
+        #            to read
+        # Returns:
+        #   An instance of DiaryEntry representing the entry that is closest to,
+        #   but not over, the length that the user could read in the minutes
+        #   they have available given their reading speed.
+        pass
